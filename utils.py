@@ -53,7 +53,7 @@ def from_user(item):
         split_string = item.split()
         account_name = split_string[1]
         account_number = split_string[2]
-        return f"Visa Classic {account_number[12:19]}{'** ' + ('*' * 4)} {account_number[-4:]}"
+        return f"Visa Classic {account_number[0:4]} {account_number[4:6]}{'** ' + ('*' * 4)} {account_number[-4:]}"
 
     else:
         split_string = item.split(' ')
@@ -69,7 +69,7 @@ def to_user(item):
         split_string = item.split()
         account_name = split_string[1]
         account_number = split_string[2]
-        return f"Visa Classic {account_number[12:19]}{'** ' + ('*' * 4)} {account_number[-4:]}"
+        return f"Visa Classic {account_number[0:4]} {account_number[4:6]}{'** ' + ('*' * 4)} {account_number[-4:]}"
 
     else:
         split_string = item.split(' ')
