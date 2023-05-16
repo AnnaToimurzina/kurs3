@@ -43,7 +43,18 @@ def from_user(item):
     (видны первые 6 цифр и последние 4, разбито по блокам по 4 цифры, разделенных пробелом)"""
     if item is None:
         return "XXXX XXXX XXXX XXXX"
-    # if we don't have data from where user sent money we print XXXX hidden numbers as example of credit card 16 digits.
+    elif "Счет" in item:
+        split_string = item.split()
+        account_name = split_string[0]
+        account_number = split_string[1]
+        return f"{account_name} **{account_number[-4:]}"
+
+    elif "Visa Classic" in item:
+        split_string = item.split()
+        account_name = split_string[1]
+        account_number = split_string[2]
+        return f"Visa Classic {account_number[12:19]}{'** ' + ('*' * 4)} {account_number[-4:]}"
+
     else:
         split_string = item.split(' ')
         account_name = split_string[0]
@@ -54,24 +65,37 @@ def from_user(item):
 def to_user(item):
     """Номер счета замаскирован и не отображается целиком в формате  **XXXX
        (видны только последние 4 цифры номера счета)"""
-    split_string = item.split(' ')
-    account_name = split_string[0]
-    account_number = split_string[1]
-    return f"{account_name} {'*' * 2}{account_number[-4:]}"
+    if "Visa Classic" in item:
+        split_string = item.split()
+        account_name = split_string[1]
+        account_number = split_string[2]
+        return f"Visa Classic {account_number[12:19]}{'** ' + ('*' * 4)} {account_number[-4:]}"
+
+    else:
+        split_string = item.split(' ')
+        account_name = split_string[0]
+        account_number = split_string[1]
+        return f"{account_name} {'*' * 2}{account_number[-4:]}"
+
+
 
 def show_transactions(data):
     """вывод картинки транзакции """
     if data is None:
         return "ERROR 404"
+
     for transaction in data[:5]:
         print("-" * 30)
-        print('{date} {description}\n'
-              '{from_} --> {to}\n'
-              '{amount} {currency}\n'.format(date=date_change(transaction['date']),
-                                             description=transaction['description'],
-                                             from_=from_user(transaction.get('from')),
-                                             to=to_user(transaction['to']),
-                                             amount=transaction['operationAmount']['amount'],
-                                             currency=transaction['operationAmount']['currency']['name'], ))
+        print("{date} {description}\n".format(date=date_change(transaction['date']),
+                                                  description=transaction['description']),
+              "{from_} --> {to}\n".format(from_=from_user(transaction.get('from')),
+                                              to=to_user(transaction['to'])),
+              "{amount} {currency}\n".format(amount=transaction['operationAmount']['amount'],
+                                                 currency=transaction['operationAmount']['currency']['name']))
+
+
+
+
+
 
 
