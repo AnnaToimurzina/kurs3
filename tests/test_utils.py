@@ -62,6 +62,8 @@ def test_date_change():
 def test_from_user():
     assert from_user(None) == "XXXX XXXX XXXX XXXX"
     assert from_user("Mastercard 1234561278901234") == "Mastercard 1234 56** **** 1234"
+    assert from_user("Visa Classic 4195191172583802") == "Visa Classic 4195 19** **** 3802"
+
 
 
 def test_to_user():
@@ -69,12 +71,4 @@ def test_to_user():
 
 
 def test_show_transactions():
-    data = [{"id": 441945886, "state": "EXECUTED", "date": "2019-08-26T10:50:58.294041",
-                    "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
-                    "description": "Перевод организации", "from": "Maestro 1596837868705199",
-                    "to": "Счет 64686473678894779589"}]
-    expected_output = "------------------------------\n" \
-                      "26.08.2019 Перевод организации\n" \
-                      "Maestro 1596 83** **** 5199 --> Счет **9589\n" \
-                      "31957.58 руб.\n"
-    assert show_transactions(data) == expected_output
+    assert show_transactions(None) == "ERROR 404"

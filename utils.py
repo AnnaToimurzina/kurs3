@@ -3,6 +3,7 @@ from datetime import datetime
 import os.path
 
 def read_file(data):
+    ''' ложим в переменную data все содержимое файла json'''
     if not os.path.isfile(data):
         raise FileNotFoundError("Файл не найден")
     try:
@@ -17,7 +18,7 @@ def operations_executed(data):
     """
     Возвращает список отфильтрованных операции
     :param data: список всех операций
-    :return: список опрераций "EXECUTED"
+    :return: список операций "EXECUTED"
     """
     new_list = []
     for operation in data:
@@ -53,7 +54,7 @@ def from_user(item):
         split_string = item.split()
         account_name = split_string[1]
         account_number = split_string[2]
-        return f"Visa Classic {account_number[12:19]}{'** ' + ('*' * 4)} {account_number[-4:]}"
+        return f"Visa Classic {account_number[0:4]} {account_number[4:6]}{'** ' + ('*' * 4)} {account_number[-4:]}"
 
     else:
         split_string = item.split(' ')
@@ -69,7 +70,7 @@ def to_user(item):
         split_string = item.split()
         account_name = split_string[1]
         account_number = split_string[2]
-        return f"Visa Classic {account_number[12:19]}{'** ' + ('*' * 4)} {account_number[-4:]}"
+        return f"Visa Classic {account_number[0:4]} {account_number[4:6]}{'** ' + ('*' * 4)} {account_number[-4:]}"
 
     else:
         split_string = item.split(' ')
