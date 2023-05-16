@@ -3,6 +3,7 @@ from datetime import datetime
 import os.path
 
 def read_file(data):
+    ''' ложим в переменную data все содержимое файла json'''
     if not os.path.isfile(data):
         raise FileNotFoundError("Файл не найден")
     try:
@@ -17,7 +18,7 @@ def operations_executed(data):
     """
     Возвращает список отфильтрованных операции
     :param data: список всех операций
-    :return: список опрераций "EXECUTED"
+    :return: список операций "EXECUTED"
     """
     new_list = []
     for operation in data:
